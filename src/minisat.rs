@@ -125,7 +125,7 @@ pub struct Arg {
     #[arg(long = "cpu-lim", default_value_t = 0, group = "main")]
     #[validate(range(min = 0))]
     /// Limit on CPU time allowed in seconds.
-    cpu_lim: 32,
+    cpu_lim: u32,
 
     #[arg(long = "mem-lim", default_value_t = 0, group = "main",value_parser = clap::value_parser!(u32).range(0..))]
     /// Limit on memory usage in megabytes.
