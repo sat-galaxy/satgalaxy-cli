@@ -79,7 +79,7 @@ pub struct Arg {
     /// Protect clauses if their LBD decrease and is lower than (for one turn)
     lb_lbd_frozen_clause: i32,
 
-    #[arg(long = "chanseok", default_value_t = false, group = "core")]
+    #[arg(long = "chanseok", num_args(0..=1),default_value_t = false, group = "core")]
     /// Use Chanseok Oh strategy for LBD (keep all LBD<=co and remove half of firstreduceDB other learnt clauses)
     chanseok_hack: bool,
 
@@ -107,11 +107,11 @@ pub struct Arg {
     /// The min LBD required to minimize clause
     lb_lbd_minimzing_clause: i32,
 
-    #[arg(long = "lcm", default_value_t = true, group = "core")]
+    #[arg(long = "lcm", num_args(0..=1),default_value_t = true, group = "core")]
     /// Use inprocessing vivif (ijcai17 paper)
     lcm: bool,
 
-    #[arg(long = "lcm-update", default_value_t = false, group = "core")]
+    #[arg(long = "lcm-update",num_args(0..=1), default_value_t = false, group = "core")]
     /// Updates LBD when doing LCM
     lcm_update_lbd: bool,
 
@@ -170,7 +170,7 @@ pub struct Arg {
     /// Controls phase saving (0=none, 1=basic, 2=deep)
     phase_saving: i32,
 
-    #[arg(long = "rnd-init", default_value_t = false, group = "core")]
+    #[arg(long = "rnd-init",num_args(0..=1), default_value_t = false, group = "core")]
     /// Randomize the initial activity
     rnd_init_act: bool,
 
@@ -182,11 +182,11 @@ pub struct Arg {
     /// The fraction of wasted memory allowed before a garbage collection is triggered
     garbage_frac: f64,
 
-    #[arg(long = "gr", default_value_t = true, group = "core")]
+    #[arg(long = "gr", num_args(0..=1),default_value_t = true, group = "core")]
     /// glucose strategy to fire clause database reduction (must be false to fire Chanseok strategy)
     glu_reduction: bool,
 
-    #[arg(long = "luby", default_value_t = false, group = "core")]
+    #[arg(long = "luby",num_args(0..=1), default_value_t = false, group = "core")]
     /// Use the Luby restart sequence
     luby_restart: bool,
 
@@ -212,27 +212,27 @@ pub struct Arg {
     /// The amount of randomization for the phase at each restart (0=none, 1=first branch, 2=first branch (no bad clauses), 3=first branch (only initial clauses))
     randomize_phase_on_restarts: i32,
 
-    #[arg(long = "fix-phas-rest", default_value_t = false, group = "core")]
+    #[arg(long = "fix-phas-rest",num_args(0..=1), default_value_t = false, group = "core")]
     /// Fixes the first 7 levels at random phase
     fixed_randomize_phase_on_restarts: bool,
 
-    #[arg(long = "adapt", default_value_t = true, group = "core")]
+    #[arg(long = "adapt",num_args(0..=1), default_value_t = true, group = "core")]
     /// Adapt dynamically stategies after 100000 conflicts
     adapt: bool,
 
-    #[arg(long = "forceunsat", default_value_t = false, group = "core")]
+    #[arg(long = "forceunsat",num_args(0..=1), default_value_t = false, group = "core")]
     /// Force the phase for UNSAT
     forceunsat: bool,
 
-    #[arg(long = "asymm", default_value_t = false, group = "core")]
+    #[arg(long = "asymm",num_args(0..=1), default_value_t = false, group = "core")]
     /// Shrink clauses by asymmetric branching
     use_asymm: bool,
 
-    #[arg(long = "rcheck", default_value_t = false, group = "core")]
+    #[arg(long = "rcheck",num_args(0..=1), default_value_t = false, group = "core")]
     /// Check if a clause is already implied. (costly)
     use_rcheck: bool,
 
-    #[arg(long = "elim", default_value_t = true, group = "core")]
+    #[arg(long = "elim",num_args(0..=1), default_value_t = true, group = "core")]
     /// Perform variable elimination.
     use_elim: bool,
 
@@ -264,10 +264,10 @@ pub struct Arg {
     /// Verbosity level (0=silent, 1=some, 2=more).
     verb: i32,
 
-    #[arg(long = "pre", default_value_t = true, group = "main")]
+    #[arg(long = "pre",num_args(0..=1), default_value_t = true, group = "main")]
     /// Completely turn on/off any preprocessing.
     pre: bool,
-    #[arg(long = "solve", default_value_t = true, group = "main")]
+    #[arg(long = "solve",num_args(0..=1), default_value_t = true, group = "main")]
     /// Completely turn on/off solving after preprocessing.
     solve: bool,
 
@@ -284,7 +284,7 @@ pub struct Arg {
     /// Limit on memory usage in megabytes.
     mem_lim: u32,
 
-    #[arg(long = "strictp", default_value_t = false, group = "main")]
+    #[arg(long = "strictp", num_args(0..=1),default_value_t = false, group = "main")]
     /// Validate DIMACS header during parsing.
     strictp: bool,
 }
