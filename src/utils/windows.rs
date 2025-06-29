@@ -1,13 +1,13 @@
-pub fn limit_time(max_cpu_time:u32) {
+pub fn limit_time(max_cpu_time:u64)->anyhow::Result<()> {
     if max_cpu_time==0 {
-        return;
+        return Ok(());
     }
-    println!("c WARNING: CPU limit not supported  on windows");
+    anyhow::anyhow!("CPU limit not supported on Windows");
 }
 
-pub fn limit_memory(max_memory:u32) {
+pub fn limit_memory(max_memory:u64)->anyhow::Result<()> {
     if max_memory==0 {
-        return;
+        return Ok(());
     }
-    println!("c WARNING: Memory limit not supported  on windows");
+    anyhow::anyhow!("Memory limit not supported on Windows");
 }

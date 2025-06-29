@@ -2,9 +2,11 @@
 name = "satgalaxy-cli"
 version = "0.1.0"
 edition = "2024"
+description = "A command line interface for the multi sat solver"
 [[bin]]
 path = "src/main.rs"
 name = "satgalaxy"
+
 
 [dependencies]
 anyhow = "1"
@@ -16,9 +18,17 @@ mimalloc = "0.1"
 
 rlimit = "0.10"
 
-rssat = { git = "https://github.com/francisol/rssat.git", default-features = false, features = [
+satgalaxy = { git = "https://github.com/sat-galaxy/satgalaxy-rs.git", default-features = false, features = [
     "minisat",
     "parser",
+    "glucose"
 ] }
+
+
 sysinfo = "0.35"
+thiserror = "2.0.12"
 validator = { version = "0.20", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
+lto = true

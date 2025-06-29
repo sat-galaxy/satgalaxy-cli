@@ -1,14 +1,14 @@
-use mimalloc::MiMalloc;
 #[global_allocator]
-static GLOBAL: MiMalloc = MiMalloc;
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 mod minisat;
 mod utils;
-use std::{path::PathBuf, process::exit};
+mod glucose;
+mod core;
+use std::{process::exit};
 
 use clap::{Parser, Subcommand};
 
-use validator::{Validate, ValidationError};
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -18,20 +18,26 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Commands {
-    /// Use minisat(2.2.0) solver
+    /// Use minisat(2.2.0) solver 
+    /// https://github.com/niklasso/minisat
     Minisat(minisat::Arg),
+    /// Use glucose(4.2.1) solver
+    /// https://github.com/arminbiere/glucose
+    Glucose(glucose::Arg),
 }
 fn main() {
     let cli = Cli::parse();
-    let ret = match cli.command {
+    let ret: Result<i32, anyhow::Error> = match cli.command {
         Commands::Minisat(arg) => {
-            arg.validate().unwrap();
             arg.run()
-        }
+        },
+        Commands::Glucose(arg) => {
+            arg.run()
+        },
     };
 
-    // match ret {
-    //     Ok(code) => exit(code),
-    //     Err(_) => todo!(),
-    // }
+    match ret {
+        Ok(code) => exit(code),
+        Err(e) => eprintln!("c ERROR: {}", e),
+    }
 }

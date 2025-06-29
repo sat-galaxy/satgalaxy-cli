@@ -174,7 +174,7 @@ version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6fac387a98bb7c37292057cffc56d62ecb629900026402633ae9160df93a8766"
 dependencies = [
- "nom 7.1.3",
+ "nom",
 ]
 
 [[package]]
@@ -944,15 +944,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nom"
-version = "8.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df9761775871bdef83bee530e60050f7e54b1105350d6884eb0fb4f46c2f9405"
-dependencies = [
- "memchr",
-]
-
-[[package]]
 name = "ntapi"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1023,7 +1014,7 @@ dependencies = [
  "miette",
  "serde",
  "serde_json",
- "thiserror 2.0.12",
+ "thiserror",
  "ucd-trie",
 ]
 
@@ -1145,7 +1136,7 @@ dependencies = [
  "rustc-hash 2.1.1",
  "rustls",
  "socket2",
- "thiserror 2.0.12",
+ "thiserror",
  "tokio",
  "tracing",
  "web-time",
@@ -1166,7 +1157,7 @@ dependencies = [
  "rustls",
  "rustls-pki-types",
  "slab",
- "thiserror 2.0.12",
+ "thiserror",
  "tinyvec",
  "tracing",
  "web-time",
@@ -1332,22 +1323,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rssat"
-version = "0.1.5"
-source = "git+https://github.com/francisol/rssat.git#c2f342d1ae92ac3ec80d47c545f9a7cef86c6e5f"
-dependencies = [
- "bindgen",
- "cmake",
- "flate2",
- "nom 8.0.0",
- "pest",
- "pest_derive",
- "reqwest",
- "tar",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "rustc-demangle"
 version = "0.1.25"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1426,6 +1401,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
 
 [[package]]
+name = "satgalaxy"
+version = "0.1.5"
+source = "git+https://github.com/sat-galaxy/satgalaxy-rs.git#f386450cb7bfdeb43b54e658c9820b6566fbce7d"
+dependencies = [
+ "bindgen",
+ "cmake",
+ "flate2",
+ "pest",
+ "pest_derive",
+ "reqwest",
+ "tar",
+ "thiserror",
+]
+
+[[package]]
 name = "satgalaxy-cli"
 version = "0.1.0"
 dependencies = [
@@ -1436,8 +1426,9 @@ dependencies = [
  "human_bytes",
  "mimalloc",
  "rlimit",
- "rssat",
+ "satgalaxy",
  "sysinfo",
+ "thiserror",
  "validator",
 ]
 
@@ -1641,31 +1632,11 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.69"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
-dependencies = [
- "thiserror-impl 1.0.69",
-]
-
-[[package]]
-name = "thiserror"
 version = "2.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "567b8a2dae586314f7be2a752ec7474332959c6460e02bde30d702a66d488708"
 dependencies = [
- "thiserror-impl 2.0.12",
-]
-
-[[package]]
-name = "thiserror-impl"
-version = "1.0.69"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
+ "thiserror-impl",
 ]
 
 [[package]]
