@@ -1,0 +1,24 @@
+[package]
+name = "satgalaxy-cli"
+version = "0.1.0"
+edition = "2024"
+[[bin]]
+path = "src/main.rs"
+name = "satgalaxy"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4.5", features = ["derive"] }
+cpu-time = "1.0.0"
+ctrlc = { version = "3.4", features = ["termination"] }
+human_bytes = "0.4"
+mimalloc = "0.1"
+
+rlimit = "0.10"
+
+rssat = { git = "https://github.com/francisol/rssat.git", default-features = false, features = [
+    "minisat",
+    "parser",
+] }
+sysinfo = "0.35"
+validator = { version = "0.20", features = ["derive"] }
