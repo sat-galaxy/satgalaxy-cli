@@ -6,13 +6,13 @@ use std::{
 
 use clap::Args;
 use satgalaxy::{
-    parser::{read_dimacs_from_file, read_dimacs_from_reader},
+    parser::read_dimacs_from_reader,
     solver::{self, MinisatSolver},
 };
 use validator::Validate;
 
 use crate::{
-    core::{Stat, Writer}, parser::{parse_path, SmartPath, SmartReader}, utils::{self}
+    core::{Stat, Writer,parse_path, SmartPath, SmartReader}, utils::{self}
 };
 
 #[derive(Args, Validate)]

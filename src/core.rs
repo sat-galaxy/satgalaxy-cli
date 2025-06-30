@@ -1,7 +1,9 @@
-use std::fs::File;
-use std::io::{self, Write};
-use std::path::Path;
-use std::time::{Duration, Instant};
+use std::{
+    io::{Read, Stdin, stdin,self, Write},
+    path::{PathBuf,Path},
+    time::{Duration, Instant},
+    fs::File
+};
 
 use cpu_time::ProcessTime;
 
@@ -12,13 +14,13 @@ pub enum Writer {
     Stdout(io::Stdout),
 }
 
-impl<P:AsRef<Path>> From<Option<P>> for Writer {
+impl<P: AsRef<Path>> From<Option<P>> for Writer {
     fn from(path: Option<P>) -> Self {
         match path {
             Some(p) => Writer::File(File::create(p).unwrap()),
             None => Writer::Stdout(io::stdout()),
         }
-    } 
+    }
 }
 
 impl Write for Writer {
@@ -109,4 +111,51 @@ impl Stat {
         self.printed = true;
         return true;
     }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum SmartPath {
+    FilePath(PathBuf),
+    Url(url::Url),
+}
+
+pub fn parse_path(s: &str) -> Result<SmartPath, String> {
+    url::Url::parse(s).map(SmartPath::Url).or_else(|_| {
+        let path = PathBuf::from(s);
+        if path.exists() {
+            Ok(SmartPath::FilePath(path))
+        } else {
+            Err(format!("`{s}` is not a valid URL or file path"))
+        }
+    })
+}
+
+pub(crate) enum SmartReader {
+    Stdin(Stdin),
+    File(File),
+    Url(reqwest::blocking::Response),
+}
+
+impl Read for SmartReader {
+    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+        match self {
+            SmartReader::Stdin(reader) => reader.read(buf),
+            SmartReader::File(reader) => reader.read(buf),
+            SmartReader::Url(reader) => reader.read(buf),
+        }
+    }
+}
+
+impl TryFrom<Option<&SmartPath>> for SmartReader {
+    fn try_from(value: Option<&SmartPath>) -> Result<Self, Self::Error> {
+        match value {
+            Some(SmartPath::FilePath(path)) => File::open(path).map(SmartReader::File),
+            Some(SmartPath::Url(url)) => reqwest::blocking::get(url.clone())
+                .map(|resp| SmartReader::Url(resp))
+                .map_err(|e| io::Error::new(io::ErrorKind::Other, e)),
+            None => Ok(SmartReader::Stdin(stdin())),
+        }
+    }
+
+    type Error = io::Error;
 }

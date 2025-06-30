@@ -4,7 +4,6 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 mod core;
 mod glucose;
 mod minisat;
-mod parser;
 mod utils;
 use std::process::exit;
 
