@@ -85,7 +85,7 @@ pub struct Arg {
     /// The fraction of wasted memory allowed before a garbage collection is triggered
     garbage_frac: f64,
     #[arg(long = "min-learnts", default_value_t = 0, group = "core")]
-    #[validate(range(min = 0))]
+    #[validate(range(min = 0, message = "Min learnts lim must be at least 0"))]
     /// Minimum learnt clause limit
     min_learnts_lim: i32,
 
@@ -102,7 +102,7 @@ pub struct Arg {
     use_elim: bool,
 
     #[arg(long = "grow", default_value_t = 0, group = "simp")]
-    #[validate(range(min = 0))]
+    #[validate(range(min = 0, message = "Grow must be at least 0"))]
     /// Allow a variable elimination step to grow by a number of clauses.
     grow: i32,
 

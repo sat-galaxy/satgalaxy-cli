@@ -237,11 +237,12 @@ pub struct Arg {
     use_elim: bool,
 
     #[arg(long = "grow", default_value_t = 0, group = "core")]
+    #[validate(range(min = 0, message = "Grow must be at least 0"))]
     /// Allow a variable elimination step to grow by a number of clauses.
     grow: i32,
 
     #[arg(long = "cl-lim", default_value_t = 20, group = "core")]
-    #[validate(range(min = -1))]
+    #[validate(range(min = -1,message = "Clause limit must be -1 or a positive integer"))]
     /// Variables are not eliminated if it produces a resolvent with a length above this limit. -1 means no limit
     clause_lim: i32,
 
