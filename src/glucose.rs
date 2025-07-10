@@ -4,12 +4,11 @@ use std::{
 };
 
 use crate::{
-    core::{Stat, Writer},
-    utils::{self},
+    core::{Stat, Writer,parse_path, SmartPath, SmartReader}, utils::{self}
 };
 use clap::Args;
 use satgalaxy::{
-    parser::read_dimacs_from_file,
+    parser::read_dimacs_from_reader,
     solver::{self, GlucoseSolver},
 };
 use std::io::Write;
@@ -17,9 +16,9 @@ use validator::Validate;
 
 #[derive(Args, Validate)]
 pub struct Arg {
-    /// Input file
-    #[arg(value_name = "INPUT")]
-    input: Option<PathBuf>,
+    /// Input source: local file (.cnf, .xz, .tar.gz), URL, default for stdin
+    #[arg(value_name = "INPUT",value_parser = parse_path)]
+    input: Option<SmartPath>,
     #[arg(value_name = "OUTPUT")]
     output: Option<PathBuf>,
     #[arg(long = "K", default_value_t = 0.8, group = "core")]
@@ -398,7 +397,8 @@ impl Arg {
             solver.eliminate(true);
         }
         stat.lock().unwrap().start_log();
-        read_dimacs_from_file(self.input.as_ref(), self.strictp, &mut solver)?;
+        let reader:SmartReader= self.input.as_ref().try_into()?;
+        read_dimacs_from_reader(reader, self.strictp, &mut solver)?;
         stat.lock().unwrap().parsed();
         solver.eliminate(true);
         stat.lock().unwrap().simplified();

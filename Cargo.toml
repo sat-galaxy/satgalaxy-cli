@@ -13,20 +13,23 @@ anyhow = "1"
 clap = { version = "4.5", features = ["derive"] }
 cpu-time = "1.0.0"
 ctrlc = { version = "3.4", features = ["termination"] }
-human_bytes = "0.4"
+human_bytes = {version = "0.4",features = ["si-units","fast"]}
 mimalloc = "0.1"
+reqwest = { version = "0.12.20", features = ["blocking","rustls-tls","charset","http2","system-proxy"],default-features=false }
 
 rlimit = "0.10"
 
 satgalaxy = { git = "https://github.com/sat-galaxy/satgalaxy-rs.git", default-features = false, features = [
     "minisat",
     "parser",
+    "compression",
     "glucose"
 ] }
 
 
 sysinfo = "0.35"
 thiserror = "2.0.12"
+url = "2.5.4"
 validator = { version = "0.20", features = ["derive"] }
 
 [profile.release]
