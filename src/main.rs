@@ -1,6 +1,3 @@
-#[global_allocator]
-static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
-
 mod core;
 mod glucose;
 mod minisat;
