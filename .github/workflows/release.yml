@@ -16,7 +16,7 @@ jobs:
       matrix:
         include:
           # Linux 目标
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             targets: [
               "x86_64-unknown-linux-gnu",
               "x86_64-unknown-linux-musl",
@@ -48,11 +48,7 @@ jobs:
         submodules: recursive  # 确保包含子模块
 
     - name: Install Zig
-      run: |
-        # 下载并安装 Zig
-        wget https://ziglang.org/builds/zig-${{ env.ZIG_VERSION }}-${{ runner.os }}-${{ runner.arch }}.tar.xz
-        tar -xf zig-*.tar.xz
-        echo "$(pwd)/zig-${{ env.ZIG_VERSION }}-${{ runner.os }}-${{ runner.arch }}" >> $GITHUB_PATH
+      uses: mlugg/setup-zig@v2
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -66,18 +62,7 @@ jobs:
       run: cargo install cargo-zigbuild
 
     - name: Install CMake and build dependencies
-      run: |
-        # 安装 CMake 和其他构建依赖
-        if [ "${{ runner.os }}" = "Linux" ]; then
-          sudo apt-get update
-          sudo apt-get install -y cmake ninja-build pkg-config
-        elif [ "${{ runner.os }}" = "macOS" ]; then
-          brew update
-          brew install cmake ninja pkg-config
-        elif [ "${{ runner.os }}" = "Windows" ]; then
-          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-          choco install ninja
-        fi
+      uses: lukka/get-cmake@latest
 
     - name: Build for all targets
       run: |
