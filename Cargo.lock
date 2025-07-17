@@ -1475,6 +1475,8 @@ checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
 [[package]]
 name = "satgalaxy"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6b0fccb764d7e7e45395015d3afa642bbfdc24ae46e48167e9f35ec3b43e6272"
 dependencies = [
  "bindgen",
  "cmake",
@@ -1499,6 +1501,7 @@ dependencies = [
  "rlimit",
  "satgalaxy",
  "sysinfo",
+ "thiserror",
  "url",
  "validator",
 ]
