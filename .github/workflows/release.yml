@@ -70,6 +70,7 @@ jobs:
         for target in ${{ join(matrix.targets, ' ') }}; do
           echo "Building for target: $target"
           
+          rustup target add $target
           # 设置目标名称用于文件名
           target_name=$(echo $target | sed 's/\./_/g' | tr '-' '_')
           
